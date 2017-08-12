@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSMpegPlayer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <style>
+    html,body{
+        padding: 0;
+        margin: 0;
+    }
+    .msg-wrap{
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #fff;
+        border: 1px solid #000;
+    }
+    .video-wrap{
+        width: 100%;
+        display: none;
+    }
+    </style>
+</head>
+<body>
+    <video class="video-wrap" id="video-ios" x5-playsinline webkit-playsinline playsinline src="video.mp4"></video>
+    <canvas class="video-wrap" id="video-android"></canvas>
+    <div class="msg-wrap" id="msgTxt">loading...</div>
+    <script src="js/jsmpeg.js"></script>
+    <script>
+        var msgTxt = document.getElementById('msgTxt');
+        var video = document.getElementById('video-ios');
+        var canvas = document.getElementById('video-android');
+
+        //检测是否为非安卓浏览器并作处理
+        var check = !! navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+
+        if(check){
+            msgTxt.innerHTML = "not Android mode"
+            video.style.display="block"
+            video.play()
+            //监听video加载完成
+            video.addEventListener("loadedmetadata",function(){
+                msgTxt.innerHTML = "not Android mode:videoPlaying"
+            })
+            //监听video播放结束
+            video.addEventListener("ended",function(){
+                msgTxt.innerHTML = "not Android mode:videoEnd"
+            })
+        }else{
+            jsmpegPlay(canvas,'out.ts',startCallBack,endCallBack)
+        }
+
+        function jsmpegPlay(Vcanvas,vVideo,startFun,endFun) {
+            var player = new JSMpeg.Player(
+                vVideo ,{
+                    canvas: Vcanvas, 
+                    loop: false, 
+                    autoplay: true,
+                    startSign: true,
+                    startCallBack: startFun,
+                    endCallBack: endFun
+                });
+        }
+        
+        //视频开始播放（解码完成）执行
+        function startCallBack() {
+            msgTxt.innerHTML = "Android mode:videoPlaying"
+            canvas.style.display="block"
+        }
+        //视频播放完成执行
+        function endCallBack() {
+            msgTxt.innerHTML = "Android mode:videoEnd"
+        }
+    </script>
+</body>
+</html>

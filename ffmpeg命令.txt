@@ -1,0 +1,5 @@
+转ts：
+ffmpeg -i video.mp4 -f mpegts -codec:v mpeg1video -codec:a mp2 out.ts
+
+或带参（参数含义自行搜索网上ffmpeg资料）：
+ffmpeg -i video.mp4 -f mpegts -codec:v mpeg1video -b:v 1000k -r 30 -bf 0 -codec:a mp2 -ar 44100 -ac 1 -b:a 128k out.ts
