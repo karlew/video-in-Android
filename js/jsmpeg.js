@@ -524,10 +524,10 @@ Player.prototype.updateForStaticFile = function() {
 		}
 		else {
 			this.pause();
-			//视频播放完成执行 by karlew
-			if(this.options.endCallBack){
-				this.options.endCallBack()
-			}
+		}
+		//视频播放完成执行 by karlew
+		if(this.options.endCallBack){
+			this.options.endCallBack()
 		}
 	}
 };
