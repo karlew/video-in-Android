@@ -48,10 +48,10 @@
                 msgTxt.innerHTML = "not Android mode:videoEnd"
             })
         }else{
-            jsmpegPlay(canvas,'out.ts',startCallBack,endCallBack)
+            jsmpegPlay(canvas,'out.ts',startCallBack,playingCallBack,endCallBack)
         }
 
-        function jsmpegPlay(Vcanvas,vVideo,startFun,endFun) {
+        function jsmpegPlay(Vcanvas,vVideo,startFun,playingFun,endFun) {
             var player = new JSMpeg.Player(
                 vVideo ,{
                     canvas: Vcanvas, 
@@ -59,14 +59,19 @@
                     autoplay: true,
                     startSign: true,
                     startCallBack: startFun,
+                    playingCallBack: playingFun,
                     endCallBack: endFun
                 });
         }
         
-        //视频开始播放（解码完成）执行
+        //视频开始播放（即解码完成）执行
         function startCallBack() {
             msgTxt.innerHTML = "Android mode:videoPlaying"
             canvas.style.display="block"
+        }
+        //视频播放进度
+        function playingCallBack(currentTime) {
+            // console.log(currentTime)
         }
         //视频播放完成执行
         function endCallBack() {

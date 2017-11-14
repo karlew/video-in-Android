@@ -434,6 +434,10 @@ Player.prototype.update = function() {
 	}
 	else {
 		this.updateForStaticFile();
+		//监听视频播放时间进度 by karlew
+		if(this.options.playingCallBack){
+			this.options.playingCallBack(this.currentTime)
+		}
 	}
 };
 
